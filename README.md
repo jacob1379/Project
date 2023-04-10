@@ -402,13 +402,13 @@ public interface MemberDao {
 
 ## *회원가입    
 ![](md_resources/회원가입.gif)    
-## *로그인  
+## *로그인* 
 ![](md_resources/로그인.gif)       
-## 내 정보 조회   
+## #내 정보 조회  
 ![](md_resources/내정보.gif)  
-## 로그아웃  
+## <로그아웃>  
 ![](md_resources/로그아웃.gif)
-## 아이디 찾기  
+## [ 아이디 찾기 ]  
 ![](md_resources/아이디찾기.gif)
 ## 비밀번호 찾기
 ![](md_resources/비밀번호찾기.gif)

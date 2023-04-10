@@ -424,7 +424,7 @@ public interface MemberDao {
 ![](md_resources/페이징.gif)   
 ## 비로그인 게시글 읽기,쓰기  
 ![](md_resources/읽기쓰기.gif)    
-## 조회 수 올리기  
+## 로그인 게시글 읽기 및 조회 수 올리기  
 ![](md_resources/조회수.gif)
 ## 추천 수 올리기
 ![](md_resources/추천수.gif)
@@ -433,7 +433,7 @@ public interface MemberDao {
 ## 게시글 수정  
 ![](md_resources/글변경.gif)  
 ## 게시글 삭제  
-![](md_resources제글삭제.gif)  
+![](md_resources/글삭제.gif)  
 
 ----------------------------------------------------------------------------
 
@@ -443,7 +443,7 @@ public interface MemberDao {
 ## 댓글 삭제  
 ![](md_resources/댓글삭제.gif)    
 ## 댓글 수 세기    
-![](md_resources/수댓글수.gif) 
+![](md_resources/댓글수.gif) 
 
 ----------------------------------------------------------------------------
 

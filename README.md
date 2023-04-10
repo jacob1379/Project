@@ -340,7 +340,7 @@ public BoardDto.Page list(Integer pageno, String writer) {
 ## 요청 처리 과정
 `요청 > 컨트롤러 > 서비스 > 서비스 구현 > DAO > Mapper > Mybatis > DB > 컨트롤러(DB 반환)`
 
->  Member  
+>  간단 소개
   
 - 아이디 중복 확인
 ~~~c
@@ -400,9 +400,9 @@ public interface MemberDao {
 <mapper>
 ~~~
 
-## 회원가입    
+## *회원가입    
 ![](md_resources/회원가입.gif)    
-## 로그인  
+## *로그인  
 ![](md_resources/로그인.gif)       
 ## 내 정보 조회   
 ![](md_resources/내정보.gif)  

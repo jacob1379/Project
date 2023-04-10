@@ -399,7 +399,9 @@ public interface MemberDao {
 	</select>
 <mapper>
 ~~~
+----------------------------------------------------------------------------
 
+>  Member
 ## [ 회원가입 ]    
 ![](md_resources/회원가입.gif)    
 ## [ 로그인 ] 
@@ -416,7 +418,6 @@ public interface MemberDao {
 ![](md_resources/비밀번호변경.gif)
 ## [ 회원탈퇴 ]
 ![](md_resources/회원탈퇴.gif)
-
 ----------------------------------------------------------------------------
 
 > Board 
@@ -434,7 +435,6 @@ public interface MemberDao {
 ![](md_resources/글변경.gif)  
 ## [ 게시글 삭제 ] 
 ![](md_resources/글삭제.gif)  
-
 ----------------------------------------------------------------------------
 
 > Comment   
@@ -444,7 +444,6 @@ public interface MemberDao {
 ![](md_resources/댓글삭제.gif)    
 ## [ 댓글 수 세기 ]   
 ![](md_resources/댓글수.gif) 
-
 ----------------------------------------------------------------------------
 
 ## 보완점

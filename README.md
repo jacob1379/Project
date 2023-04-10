@@ -401,49 +401,49 @@ public interface MemberDao {
 ~~~
 
 ## 회원가입    
-![](md_resources/signUp.gif)    
+![](md_resources/회원가입.gif)    
 ## 로그인  
 ![](md_resources/로그인.gif)       
 ## 내 정보 조회   
-![](md_resources/latestLogin.gif)  
+![](md_resources/내정보.gif)  
 ## 로그아웃  
-![](md_resources/recommendTime.gif)
+![](md_resources/로그아웃.gif)
 ## 아이디 찾기  
-![](md_resources/recommendTime.gif)
+![](md_resources/아이디찾기.gif)
 ## 비밀번호 찾기
-![](md_resources/recommendTime.gif)
+![](md_resources/비밀번호찾기.gif)
 ## 비밀번호 변경
-![](md_resources/recommendTime.gif)
+![](md_resources/비밀번호변경.gif)
 ## 회원탈퇴
-![](md_resources/recommendTime.gif)
+![](md_resources/회원탈퇴.gif)
 
 ----------------------------------------------------------------------------
 
 > Board 
 ## 전체 게시글 가져오기 및 페이징   
-![](md_resources/boardList.gif)   
+![](md_resources/페이징.gif)   
 ## 비로그인 게시글 읽기,쓰기  
-![](md_resources/boardRead.gif)    
+![](md_resources/읽기쓰기.gif)    
 ## 조회 수 올리기  
-![](md_resources/countHit.gif)
+![](md_resources/조회수.gif)
 ## 추천 수 올리기
-![](md_resources/recommendTime.gif)
+![](md_resources/추천수.gif)
 ## 게시글 쓰기 
-![](md_resources/boardWrite.gif)  
+![](md_resources/글작성.gif)  
 ## 게시글 수정  
-![](md_resources/boardUpdate.gif)  
+![](md_resources/글변경.gif)  
 ## 게시글 삭제  
-![](md_resources/boardDelete.gif)  
+![](md_resources제글삭제.gif)  
 
 ----------------------------------------------------------------------------
 
 > Comment   
 ## 댓글 작성    
-![](md_resources/replyWrite.gif)  
+![](md_resources/댓글작성.gif)  
 ## 댓글 삭제  
-![](md_resources/replyDelete.gif)    
+![](md_resources/댓글삭제.gif)    
 ## 댓글 수 세기    
-![](md_resources/replyUpdate.gif) 
+![](md_resources/수댓글수.gif) 
 
 ----------------------------------------------------------------------------
 

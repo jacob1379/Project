@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="/css/main.css">
+<title>Insert title here</title>
+<style>
+	tr{
+		text-align:center;
+	}
+	.first{
+		width:300px;
+	}
+</style>
+<script>
+	let member = undefined;
+	
+	const printPage=()=>{
+		$("#irum").text(member.irum);
+		$("#username").text(member.username);
+		$("#birthday").text(member.birthday);
+		$("#joinday").text(member.joinday);
+		$("#email").text(member.email);
+	}
+	
+	$(document).ready(function() {
+		$.ajax("/member").done(result=> {
+			member = result.result;
+			printPage();
+		})
+		$("#changePassword").on("click", ()=> {
+			location.href = "/member/change_password"
+		});
+		$("#resign").on("click", (e)=> {
+			$.ajax({
+				url: "/member/delete", 
+				method: "delete",
+				success: function(){
+					$.ajax({
+						url: "http://localhost:8087/member/logout",
+						method: "post"
+					});
+				}
+			}).then(
+					(result)=>{
+						Swal.fire("회원탈퇴 성공","회원탈퇴를 하였습니다", "success").then((choice)=>{
+							if(choice.isConfirmed) location.href= "/";
+						})
+					}, (result)=>{
+						Swal.fire("회원탈퇴 실패", "회원탈퇴를 하지 못했습니다","error").then((choice)=>{
+							if(choice.isConfirmed) location.href= result.url;
+						})
+					}
+				)
+		});
+	})
+</script>
+</head>
+<body>
+<div th:text="${member}"></div>
+	<div id="page">
+		<nav id="nav" th:replace="~{/fragments/nav.html}"></nav>
+		<div id="main">
+			<aside th:replace="~{/fragments/aside.html}"></aside>
+			<section id="section" style="background-color:white; display:flex; flex-direction:column; align-items:center;">
+				<table class="table table-hover" style="width:700px;">
+					<h3 style="margin-top:80px;">내 정보</h3>
+					<br>
+					<tr>
+						<td class="first">이름</td>
+						<td id="irum"></td>
+					</tr>
+					<tr>
+						<td class="first">아이디</td>
+						<td id="username"></td>
+					</tr>
+					<tr>
+						<td class="first">생년월일</td>
+						<td id="birthday"></td>
+					</tr>
+					<tr>
+						<td class="first">가입일</td>
+						<td colspan="2" id="joinday"></td>
+					</tr>
+					<tr>
+						<td class="first" style="vertical-align:center;">비밀번호</td>
+						<td colspan="2">
+							<button type="button" class="btn btn-primary" id="changePassword">비밀번호 변경</button>
+						</td>
+					</tr>
+					<tr>
+						<td class="first">이메일</td>
+						<td id="email"></td>
+					</tr>
+				</table>
+				<br>
+				<button type="button" class="btn btn-warning" id="resign">회원탈퇴</button>
+			</section>
+			<div>
+			<footer id="footer" th:replace="~{/fragments/footer.html}"></footer>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

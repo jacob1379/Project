@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.BoardDao">
+
+	<insert id="save">
+		<selectKey resultType="int" keyProperty="bno" order="BEFORE">
+			select board_seq.nextval from dual
+		</selectKey>
+		insert into board(bno,title,content,writer) values(#{bno},#{title},#{content},#{writer})
+	</insert>
+	
+	<select id="findAll" resultType="com.example.demo.dto.BoardDto$ListDto">
+		select * from
+		(
+			select rownum as rnum, b.* from
+				(select /*+ index_desc(board board_pk_bno) */ bno, title, writer, writeTime, readCount, goodCount, badCount, commentCount from board
+				<where>
+					<if test="writer!=null">writer=#{writer}</if>
+				</where>
+				order by bno desc) b
+			where rownum &lt;=#{end}
+		)
+		where rnum&gt;=#{start}
+	</select>
+	
+	<select id="find" resultType="com.example.demo.dto.BoardDto$ReadDto">
+		<![CDATA[
+			select * from board where bno=#{bno} and rownum<=1
+		]]>
+	</select>
+	
+	<update id="update">
+		update board
+			<trim prefix="set" suffixOverrides=",">
+				<if test="title != null">title=#{title},</if>
+				<if test="content != null">content=#{content},</if>
+				<if test="readCount != null">readCount=readCount+1,</if>
+				<if test="goodCount != null">goodCount=goodCount+1,</if>
+				<if test="badCount != null">badCount=badCount+1,</if>
+				<if test="commentCount == 1">commentCount=commentCount+1,</if>
+				<if test="commentCount == 0">commentCount=commentCount-1,</if>
+			</trim>
+			where bno=#{bno}
+	</update>
+	
+	<delete id="delete">
+		delete from board where bno=#{bno}
+	</delete>
+	
+	<select id="count" resultType="int">
+		select /*+ index(board board_pk_bno) */ count(bno) from board
+		<where>
+			<if test="writer!=null">writer=#{writer}</if>
+		</where>
+	</select>
+	
+	<select id="findWriter" resultType="String">
+		select writer from board where bno=#{bno} and rownum&lt;=1
+	</select>
+	
+	<select id="findGoodCount" resultType="int">
+		select goodCount from board where bno=#{bno} and rownum&lt;=1
+	</select>
+	
+	<select id="findBadCount" resultType="int">
+		select badCount from board where bno=#{bno} and rownum&lt;=1
+	</select>
+	
+</mapper>

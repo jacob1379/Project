@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/main.css">
+<title>자유게시판</title>
+<style>
+	.pagination {
+		display: flex;
+		justify-content: center;
+	}
+	.pagination li {
+		display: none;
+	}
+</style>
+<script th:inline="javascript">
+	const msg = /*[[${msg}]]*/ "msg";
+	if(msg!=null)
+		alert(msg);
+</script>
+<script>
+	function getPageno() {
+		const params = new URLSearchParams(location.search);
+		const pageno = params.get("pageno");
+		if(pageno==null)
+			return 1;
+		if(isNaN(pageno))
+			return 1;
+		if(pageno<1)
+			return 1;
+		return pageno;
+	}
+	
+	function printBoardList(boardList) {
+		const $list = $('#list');
+		const $t = $('#tr_template').html();
+		for(const b of boardList) {
+			$list.append($t.replace('{bno}',b.bno).replace('{bno}',b.bno).replace('{title}',b.title).replace('{writer}',b.writer)
+					.replace('{writeTime}', b.writeTime).replace('{readCount}',b.readCount).replace('{commentCount}',b.commentCount));
+		}
+	}
+	
+	function getPagination({pageno, pagesize, totalCount, blocksize=5}) {
+		const countOfPage = Math.ceil(totalCount / pagesize);
+		const prev = Math.floor((pageno-1)/blocksize) * blocksize;
+		const start = prev+1;
+		let end = prev + blocksize;
+		let next = end+1;
+		if(end >= countOfPage) {
+			end = countOfPage;
+			next = 0;
+		}
+		return {pageno, prev, start, end, next};
+	}
+	
+	function printPagination({pageno, prev, start, end, next}) {
+		if(prev>0)
+			$('#prev').css('display', 'block').children('a').attr("href", "/board/list?pageno=" + prev);
+		if(next>0)
+			$('#next').css('display', 'block').children('a').attr("href", "/board/list?pageno=" + next);
+		
+		const pagination_li = $('.pagination li');
+		
+		for(let i = start; i<=end; i++) {
+			let $li1 = $(pagination_li[5]);		
+			let $li2 = $(pagination_li[i % 5]);
+			
+			if(i%5==0) {
+				$li1.css('display','block').children('a').attr("href", "/board/list?pageno="+i).text(i);
+				if(i===pageno)
+					$li1.addClass('active');
+			} else {
+				$li2.css('display','block').children('a').attr("href", "/board/list?pageno="+i).text(i);
+				if(i===pageno)
+					$li2.addClass('active');
+			}
+		}
+	}
+	
+	$(document).ready(async function () {
+		const apiUrl = 'http://localhost:8087/board/all';
+		const pageno = getPageno();
+		const params = {pageno};
+		$.ajax({url: apiUrl, data: params}).done((response)=>{
+			printBoardList(response.result.boardList);
+			const pagination = getPagination(response.result);
+			printPagination(pagination);
+		}).fail((error)=>{
+			console.log(error);
+		});
+	})
+</script>
+</head>
+<body>
+	<div id="page">
+		<nav id="nav" th:replace="~{/fragments/nav.html}"></nav>
+		<div id="main">
+			<aside th:replace="~{/fragments/aside.html}"></aside>
+			<section id="section">
+				<div style="margin-top: 60px;">
+				<table class="table table-hover" style="text-align:center;">
+					<thead>
+						<tr class="table-light">
+						<th style="width:70px;">번호</th>
+						<th style="width:300px;">제목</th>
+						<th style="width:100px;">글쓴이</th>
+						<th style="width:100px;">날짜</th>
+						<th style="width:55px;">조회수</th>
+						<th style="width:55px;">댓글수</th>
+						</tr>
+					</thead>
+					<tbody id="list">
+					</tbody>
+				</table>
+				</div>
+				<div style="float:right;"><button class="btn btn-primary" onClick="location.href='/board/write'">글 쓰기</button></div>
+				<br>
+				<br>
+				<br>
+				<div style="display:flex; justify-content:center; align-items:center; clear:right;">
+					<form class="d-flex">
+        				<input class="form-control me-sm-2" type="search" placeholder="Search" style="width:200px;">
+        				<button disabled class="btn btn-light my-2 my-sm-0" type="submit">찾기</button>
+      				</form>
+        		</div>
+        		<br>
+				<ul class="pagination">
+					<li class="page-item" id="prev"><a class="page-link">이전</a></li>
+					<li class="page-item"><a class="page-link"></a></li>
+					<li class="page-item"><a class="page-link"></a></li>
+					<li class="page-item"><a class="page-link"></a></li>
+					<li class="page-item"><a class="page-link"></a></li>
+					<li class="page-item"><a class="page-link"></a></li>
+					<li class="page-item" id="next"><a class="page-link">다음</a></li>
+				</ul>
+			</section>
+		</div>
+		<footer id="footer" th:replace="~{/fragments/footer.html}"></footer>
+	</div>
+	<template id="tr_template"> <!-- 추가되거나 복사될 수 있는 html 요소들을 정의할 때 사용 -->
+		<tr>
+			<td>{bno}</td>
+			<td><a href="/board/read?bno={bno}" style="text-decoration: none;">{title}</a></td>
+			<td>{writer}</td>
+			<td>{writeTime}</td>
+			<td>{readCount}</td>
+			<td>{commentCount}</td>
+		</tr>
+	</template>
+</body>
+</html>

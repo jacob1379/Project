@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MemberDao">
+
+	<select id="existsById" resultType="boolean">
+		select count(*) from member where username=#{username} and rownum&lt;=1
+	</select>
+	
+	<select id="existsByEmail" resultType="boolean">
+		select count(*) from member where email=#{email} and rownum&lt;=1
+	</select>
+	
+	<insert id="save">
+		insert into member(username, password, irum, email, birthday, checkcode) values(#{username},#{password},#{irum},#{email},#{birthday},#{checkcode})
+	</insert>
+	
+	<select id="findByEmail" resultType="com.example.demo.entity.Member">
+		select * from member where email=#{email} and rownum&lt;=1
+	</select>
+	
+	<select id="findById" resultType="com.example.demo.entity.Member">
+		select * from member where username=#{username} and rownum&lt;=1
+	</select>
+	
+	<update id="update">
+		update member
+		<trim prefix="set" suffixOverrides=",">
+			<if test="password!=null">password=#{password},</if>
+			<if test="email!=null">email=#{email},</if>
+	  		<if test="role!=null">role=#{role},</if>
+	  		<if test="loginFailCount!=null">loginFailCount=#{loginFailCount},</if>
+	  		<if test="enabled!=null">enabled=#{enabled},</if>
+	  		<if test="checkcode!=null">checkcode=null,</if>
+		</trim>
+		where username=#{username}
+	</update>
+	
+	<delete id="delete">
+		delete from member where username=#{username}
+	</delete>
+	
+	<select id="findByCheckcode" resultType="com.example.demo.entity.Member">
+		select * from member where checkcode=#{checkcode} and rownum &lt;=1
+	</select>	
+</mapper>

@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#page {
+	width: 1100px;
+	margin: 0 auto;
+}
+
+#aside {
+	padding-top:75px;
+	width: 200px;
+	min-height: 755px;
+	float: left;
+	background-color: #95a5a6;
+}
+
+#aside div {
+	width: 150px;
+	background-color: #ecf0f1;
+	border: 5px solid #95a5a6;
+	height: 170px;
+	line-height: 170px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+section {
+	width: 900px;
+	padding: 20px;
+	float: right;
+	border: 1px solid #95a5a6;;
+	min-height: 755px;
+}
+
+#main {
+	overflow: hidden;
+}

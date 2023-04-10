@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/join.js"></script>
+<link rel="stylesheet" href="/css/main.css">
+<title>Insert title here</title>
+<style>
+	.success {color: blue; font-size: 0.75em;}
+	.fail {color: red; font-size: 0.75em;}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#home").click(function() {
+			location.href="/";
+		})
+	})
+</script>
+</head>
+<body>
+	<div id="page">
+		<nav id="nav" th:replace="~{/fragments/nav.html}"></nav>
+		<div id="main">
+			<aside th:replace="~{/fragments/aside.html}"></aside>
+			<section id="section" style="background-color:white; display:flex; flex-direction:column; align-items:center;">
+				<form id="join_form" style="width:350px; margin-top:60px;">
+					<div>
+						<h2 style="text-align:center;"><span>회원가입</span></h2>
+					</div>
+					<br>
+					<div>
+						<label for="username">아이디</label>
+						<span id="username_msg" class="fail"></span>
+						<div class="mb-3">
+						<input type="text" class="form-control" id="username" name="username">
+						</div>
+					</div>
+					<div>
+						<label for="password">비밀번호</label>
+						<span id="password_msg" class="fail"></span>
+						<div class="mb-3">
+						<input type="password" class="form-control" id="password" name="password">
+						</div>
+					</div>
+					<div>
+						<label for="password2">비밀번호 확인</label>
+						<span id="password2_msg" class="fail"></span>
+						<div class="mb-3">
+						<input type="password" class="form-control" id="password2">
+						</div>
+					</div>
+					<div>
+						<label for="irum">이름</label>
+						<span id="irum_msg" class="fail"></span>
+						<div class="mb-3">
+						<input type="text" class="form-control" id="irum" name="irum">
+						</div>
+					</div>
+					<div>
+						<label for="email">이메일</label>
+						<span id="email_msg" class="fail"></span>
+						<div class="mb-3">
+						<input type="text" class="form-control" id="email" name="email">
+						</div>
+					</div>
+					<div>
+						<label for="birthday">생년월일</label>
+						<span id="birthday_msg" class="fail"></span>
+						<div class="mb-3">
+						<input type="date" class="form-control" id="birthday" name="birthday">
+						</div>
+					</div>
+					<br>
+					<div class="form-group" style="text-align:center;">
+						<button type="button" id="join" class="btn btn-success">가입</button>&nbsp;&nbsp;&nbsp;
+						<button type="button" id="home" class="btn btn-primary">HOME</button>
+					</div>
+				</form>
+			</section>
+			<div>
+			<footer id="footer" th:replace="~{/fragments/footer.html}"></footer>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

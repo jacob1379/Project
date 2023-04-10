@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#page {
+	width: 1100px;
+	margin: 0 auto;
+}
+
+#aside {
+	padding-top:75px;
+	width: 200px;
+	min-height: 951px;
+	float: left;
+	background-color: #95a5a6;
+}
+
+#aside div {
+	width: 150px;
+	background-color: #ecf0f1;
+	border: 5px solid #95a5a6;
+	height: 170px;
+	line-height: 170px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+section {
+	width: 900px;
+	padding: 20px;
+	float: right;
+	border: 1px solid #95a5a6;;
+	min-height: 755px;
+}
+
+#main {
+	overflow: hidden;
+}
+
+#section {
+	padding: 80px 100px;
+}
+
+#upper {
+	overflow: hidden;
+}
+#title {
+	float: left;
+}
+#writer {
+	float: right;
+	color: #25a;
+	font-weight: bold;
+}
+#lower_right li {
+	display: inline-block;
+}
+#lower_right {
+	float: right;
+}
+#lower {
+	overflow:hidden;
+}
+#title_div div {
+	margin: 5px 0 5px;
+}
+#btnUpDe {
+	float: right;
+}
+#btnUpDe li{
+	display: inline-block;
+}
+#content {
+	min-height: 300px;
+	border: none;
+}
+#content_div {
+	background-color: #f8f8f8;
+	border-top: 1px solid #ccc;
+}
+#comment .media {
+	position : relative;
+}
+.delete_comment {
+	width : 50px;
+	height : 20px;
+	line-height: 20px;
+	text-align: center;
+	border : 1px solid skyblue;
+}

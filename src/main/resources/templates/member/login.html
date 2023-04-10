@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/main.css">
+<title>Insert title here</title>
+<script th:inline="javascript">
+	const msg = /*[[${msg}]]*/ "msg";
+	if(msg!=null)
+		alert(msg);
+</script>
+<script>
+	$(document).ready(()=>{
+		$("#login").on("click", ()=>{
+			//아이디를 대문자로 변경해서 넘겨야한다
+			const $username = $("#username").val().toUpperCase();
+			const $password = $("#password").val();
+			
+			const $form = $("<form>").attr("method", "post").attr("action", "/member/login").appendTo($("body"));
+			$("<input>").attr("type","hidden").attr("name", "username").val($username).appendTo($form);
+			$("<input>").attr("type","hidden").attr("name", "password").val($password).appendTo($form);
+			$form.submit();
+		});
+	})
+</script>
+</head>
+<body>
+	<div id="page">
+		<nav id="nav" th:replace="~{/fragments/nav.html}"></nav>
+		<div id="main">
+			<aside th:replace="~{/fragments/aside.html}"></aside>
+			<section id="section" style="background-color:white; display:flex; flex-direction:column; align-items:center;">
+				<div style="margin-top:100px;">
+					<h2><span>로그인</span></h2>
+				</div>
+				<br>
+				<div class="mb-3">
+					<label for="username">아이디</label>
+					<input type="text" id="username" name="username" class="form-control" style="width:350px;">
+					<span class="helper-text" id="username-msg"></span>
+				</div>
+				<div class="mb-3">
+					<label for="password">비밀번호</label>
+					<input type="password" id="password" name="password" class="form-control" style="width:350px;">
+					<span class="helper-text" id="password-msg"></span>
+				</div>
+				<br>
+				<button class="btn btn-success" id="login" style="width:100px;">로그인</button>
+			</section>
+			<div>
+			<footer id="footer" th:replace="~{/fragments/footer.html}"></footer>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

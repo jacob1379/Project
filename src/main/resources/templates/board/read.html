@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<link rel="stylesheet" href="/css/read.css">
+<title>Insert title here</title>
+<script th:inline="javascript">
+	// 비로그인이면 anonymousUser
+	const loginInfo = /*[[${#authentication.principal}]]*/ "test name"; //자바스크립트 인라인 기능(자바스크립트 내추럴 템플릿) 결과에 쌍따옴표를 붙임.
+</script>
+<script>
+	let username = null;
+	
+	function getBno() {
+		const params = new URLSearchParams(location.search);
+		const bno = params.get("bno");
+		if(isNaN(bno)) {
+			alert("게시물을 찾을 수 없습니다.")
+			location.href="/";
+		}
+		return bno;		
+	}
+	
+	function printBoard(board) {
+		$('#bno').text(board.bno);
+		$('#title').text(board.title);
+		$('#content').html(board.content);
+		$('#writer').text(board.writer);
+		$('#writeTime').text(board.writeTime);
+		$('#read_count').text(board.readCount);
+		$('#good_count').text(board.goodCount);
+		$('#bad_count').text(board.badCount);
+		$('#comment_count').text(board.commentCount);
+		
+		if(username!=null) {	//로그인
+			$("#comment_textarea").prop("readonly", false).attr("placeholder","");
+			$("#commentBtnArea").css("display", "block");
+			$("#good_btn").prop("disabled", false);
+			$("#bad_btn").prop("disabled", false);
+			if(username==board.writer) {	//로그인인데 작성자 본인
+				$("#btnArea").css("display", "block");
+				$("#good_btn").prop("disabled", true);
+				$("#bad_btn").prop("disabled", true);
+			} else {	//비로그인
+				
+			}
+		}
+	}
+	
+	function printComments(comments) {
+		console.log("??????????????????????")	
+		$("#comments").empty();
+		const template = $("#comment").clone().html();
+		$.each(comments, function(idx, comment) {
+			console.log(comment);
+			const html = template.replace("{writer}",comment.writer).replace("{content}", comment.content)
+				.replace("{writeTime}", comment.writeTime).replace("{cno}",comment.cno);
+			const $result = $(html);
+			if(comment.writer!==username)
+				$result.find("#delete_comment").css("display","none");
+			$("#comments").append($result);
+		});
+	}
+	
+	$(document).ready(async function() {
+		// 로그인한 사용자 아이디를 저장. 비로그인이면 null
+		if(loginInfo!=="anonymousUser") {
+			username = loginInfo.username;
+		}
+		const api = 'http://localhost:8087/board?bno='+getBno();
+		
+		$.ajax(api).done((response)=>{
+			printBoard(response.result);
+			if(response.result.comments!==null)
+				printComments(response.result.comments);
+			$('section').css('visibility', 'visible');
+		})
+		
+		// 게시글 삭제
+		$('#delete').click(function(){
+			const bno = getBno();
+			const param = {bno: getBno()};
+			if(loginInfo!=="anonymousUser") {
+				const check = confirm("글을 삭제하시겠습니까?")
+				if(check){
+					$.ajax({url:"/board/delete", method:"delete", data:param, success:function(data){location.href=data.url;}})}
+			} else {
+				return location.href="/member/login";
+			}
+			
+		})
+		
+		$('#update').click(function() {
+			location.href="/board/update?bno="+getBno();
+		})
+		
+		// 댓글 작성
+		$('#commentBtnArea').on("click", "#write", function() {
+			const bno = getBno();
+			const param = {
+					bno: getBno(),
+					content: $("#comment_textarea").val()
+			};
+			$.ajax({url: "/comments/new", method: "post", data: param}).done(response=>{
+				$("#comment_textarea").val("");
+				printComments(response.result);
+				location.href="/board/read?bno="+bno;
+			});
+		});
+		
+		// 댓글 삭제
+		$("#comments").on("click", "#delete_comment", function() {
+			const bno = getBno();
+			const param = {cno : $(this).attr("data-cno"), bno : getBno()};
+			$.ajax({
+				url: "/comments",
+				method: "delete",
+				data: param			
+			}).done(response => {
+				printComments(response.result);
+				location.href="/board/read?bno="+bno;
+			});
+		});
+		
+		// 좋아요
+		$("#good_btn").click(function() {
+			const bno = getBno();
+			const param = {bno: getBno(), isGood: true};
+			$.ajax({
+				url: "/board/gob",
+				method: "patch",
+				data: param
+			}).done((response)=>{
+				location.href="/board/read?bno="+bno;
+			});
+		})
+		// 싫어요
+		$("#bad_btn").click(function() {
+			const bno = getBno();
+			const param = {bno: getBno(), isGood: false};
+			$.ajax({
+				url: "/board/gob",
+				method: "patch",
+				data: param
+			}).done((response)=>{
+				location.href="/board/read?bno="+bno;
+			});
+		})
+	})
+</script>
+</head>
+<body>
+	<div id="page">
+		<div id="username" sec:authenticated="name" style="display:none;"></div>
+		<nav id="nav" th:replace="/fragments/nav"></nav>
+		<div id="main">
+			<aside id="aside" th:replace="/fragments/aside"></aside>
+			<section id="section">
+				<div id="title_div">
+					<!-- 제목 작성자 출력 영역 -->
+					<div id="upper">
+						<h3><span id="title"></span></h3>
+						<h6><span id="writer"></span></h6>
+					</div>
+					<!-- 글번호, 작성일, 아이피, 추천수, 조회수, 신고수 출력 영역 -->
+					<div id="lower">
+						<ul id="lower_right">
+							<li>번호&nbsp;&nbsp;<span id="bno"></span>&nbsp;&nbsp;<span>|&nbsp;&nbsp;</span></li>
+							<li>조회수&nbsp;&nbsp;<span id="read_count"></span>&nbsp;&nbsp;<span>|&nbsp;&nbsp;</span></li>
+							<li><span id="writeTime"></span></li>
+						</ul>
+					</div>
+				</div>
+				<div id="content_div">
+				<br>
+					<div class="form-group">
+						<div class="form-control" id="content"></div>
+					</div>
+				</div>
+				<div id="btnArea" style="display:none;">
+					<ul id="btnUpDe">
+					<li><button id="update" class="btn btn-secondary">변경</button></li>
+					<li><button id="delete" class="btn btn-secondary">삭제</button></li>
+					</ul>
+				</div>
+				<br>
+				<br>
+				<hr>
+				<div style="display:flex; justify-content:center; align-items:center; margin:0 5px;">
+					<div><button class="btn btn-info btn-sm" disabled="disabled" id="good_btn">좋아요<span class="badge" id="good_count"></span></button></div>
+					<div><button class="btn btn-danger btn-sm" disabled="disabled" id="bad_btn">싫어요<span class="badge" id="bad_count"></span></button></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="comment_textarea">Comments:</label>
+					<textarea class="form-control" rows="3" id="comment_textarea" readonly="readonly" placeholder="댓글을 작성하려면 로그인 해주세요."></textarea>
+				</div>
+				<br>
+				<div id="commentBtnArea" style="float:right; display:none;">
+					<button id="write" class="btn btn-primary">댓글 쓰기</button>
+				</div>
+				<br>
+				<br>
+				<h6>댓글 <span id="comment_count"></span>개</h6>
+				<hr>
+				<div id="comments">
+					<div>
+						<div><span style="color:blue;"></span></div>
+						<div style="overflow:hidden;">
+							<span></span>
+						</div>
+					</div>
+					<hr>
+				</div>
+			</section>
+		</div>
+		<footer id="footer" th:replace="/fragments/footer"></footer>
+		
+		<template id="comment">
+			<div>
+				<div>
+					<span style="color:blue;">{writer}</span>&nbsp;
+					<span>({writeTime})</span>
+				</div>
+				<div style="overflow:hidden">
+					<span>{content}</span>
+					<button class="btn btn-secondary btn-sm" id="delete_comment" style="float:right;" data-cno="{cno}">삭제</button>
+				</div>
+			</div>
+			<hr>
+		</template>
+	</div>
+</body>
+</html>

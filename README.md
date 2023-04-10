@@ -1,4 +1,4 @@
-# 게시판(Simple Bulletin Board) - 개인 프로젝트
+# 게시판(Bulletin Board) - 개인 프로젝트
 
 ## 목적
 - 신입 웹 개발자의 기본소양
@@ -401,7 +401,7 @@ public interface MemberDao {
 ~~~
 ----------------------------------------------------------------------------
 
->  Member
+> Member
 ## [ 회원가입 ]    
 ![](md_resources/회원가입.gif)    
 ## [ 로그인 ] 
@@ -446,37 +446,13 @@ public interface MemberDao {
 ![](md_resources/댓글수.gif) 
 ----------------------------------------------------------------------------
 
-## 보완점
-- 파일 업로드 / 다운로드 추가  
-- 쿠기 로그인 추가(자동 로그인)     
-- 네이버 로그인 연동 추가  
-- 댓글, 추천 Ajax로 구현   
+## 추가하거나 보완해야 할 기능
+- 파일 업로드 / 다운로드 추가
+- Summernote(웹 에디터) 게시글 변경 시 textarea 포커싱 맨뒤로
+- Summernote 게시글 작성 시 DB에 p태그 제거
+- 게시판 검색 기능
+- 회원가입 이메일 승인 로직 설정(isEnabled)
+- 네이버 로그인 연동 추가
 
 ## 프로젝트 중 실수 List
-- 프로젝트에 mysql8 적용 문제 >> 낮은 버전의 jdk 7 이하 tomcat 8 이하는 쓸수 없었음
-- 프로젝트에 커스텀 config 적용 문제 >> web.xml 에 커스텀 config 경로 지정하여 해결
-- 프로젝트 jdk 버전 변경 문제 >> project - properties - project Facets 에서 변경
-- 정적 리소스들 스프링 적용 문제 >> webapp > resouces 폴더에 넣음으로써 해결
-- 프로젝트 run on server 시, 프로젝트명(1.0.0 snapshot) 으로 저장되던 문제
-	- pom.xml 에 build 태그 하위에 finalname 태그 적용으로 해결
-	- ex) <build><finalname>프로젝트명</finalname>...다른 옵션들</build>
-- java class getters/setters 인식 문제
-	- 자동으로 오버로드 되는 이름명을 쓰지 않으면 인식을 못함
-	- 커스텀으로 변경했던 이름명 지우고 자동생성으로 해결
-- js console.log 작동확인 문제 >> 브라우저 콘솔창에서 확인 (IDE에서 확인했음)
-- js에서 jq submit(); 무반응 >> form 속성 action으로 submit 경로를 지정하지 않았기 때문
-- 컨트롤러 @RequestMapping 된 메서드 String 문자열 return 시, URL 경로 반환 문제
-	- 반환 타입앞에 @ResponseBody를 붙임으로써 view로 데이터 반환이 가능해짐
-- js에서 ajax > controller 로 한글 파라미터 전송 시, 한글 깨짐 현상 
-	- Tomcat7 - sever.xml - <Connector URIEncoding="UTF-8"> 추가
-- java에서 controller > view(.jsp) 로 한글 데이터 반환 시, ???으로 전송되는 현상
-	-  @RequestMapping(속성 produces = "application/text; charset=utf8") 추가
-- js에서 sq submit(); 무반응 >> form 속성 method 방식 지정 필요
-- 컨트롤러에서 커맨드 객체 사용시, view에서 오는 파라미터 못받는 문제
-	- 커맨드 객체 변수명들과 파라미터명들이 일치해야 받을 수 있다
-- 컨트롤러 로그인 세션 생성시에 무한로딩 문제
-	- UserVO 변수와 user_info에 실제로 정의된 테이블 컬럼이 같지 않아 오류 발생
-- jstl c:choose 조건문 안에 주석이 들어가면 오류 발생
-- 같은 값이지만 다른 주소를 참조하는 비교를 할때 "=="연산자를 써서 비교하는 실수
-	- java에서는 실제 값을 비교할때는 equals() 메소드를 쓴다
-	- "=="는 참조 주소값을 비교하는 연산자
+- 

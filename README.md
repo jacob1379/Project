@@ -459,7 +459,7 @@ public interface MemberDao {
   <textarea>여기에 값을 넣어줬는데 실패함</textarea>
 	- textarea의 선택자말고 Summernote에디터 내부 설정 선택자($(".note-editable").html(board.content);)를 잡고 넣어서 해결
 - 메인 화면 로고 이미지가 저장 위치 설정 오류로 나타나지 않음
-	- 먼저 이미지가 저장된 주소가 틀렸고 타임리프 문법 th:src="@{/img/logo.png}" 으로 해결
+	- 먼저 이미지가 저장된 절주소가 틀렸고 타임리프 문법 th:src="@{/img/logo.png}" 으로 해결
 - 스프링 시큐리티 WebSecurityConfigurerAdapter 객체를 사용할 수 없었음
 	- pom.xml의 스프링 버전 확인해보니 사용 할 수 없는 버전이라 SecurityFilterChain으로 대체
 - security config 설정을 잡는 데 어려움을 겪음

@@ -446,7 +446,7 @@ public interface MemberDao {
 ![](md_resources/댓글수.gif) 
 ----------------------------------------------------------------------------
 
-## [ 추가하거나 보완해야 할 기능 ]
+## [ 추가 또는 보완해야 할 기능 ]
 - 파일 업로드 / 다운로드 추가
 - Summernote(웹 에디터) 게시글 변경 시 textarea 포커싱 맨뒤로
 - Summernote 게시글 작성 시 Oracle DB에 p태그 제거
@@ -477,6 +477,6 @@ public interface MemberDao {
 - 페이징이 6까지만 렌더링됨(html에 li태그 7개)
 	- 반복문의 오류를 파악하고 chatgpt 도움으로 페이징 공식을 참고해(변수 i를 5로 나눈 나머지값) 다시 설정
 - 메일을 만들었는 데 보내지지 않음
-	- application.properties에 메일을설정함
-- 댓글을 삭제해도 댓글의 수가 바뀌지 않음
-	- 게시판 mapper의 댓글 수 바꾸는 쿼리를 작성하지 
+	- application.properties에 메일을 설정함
+- 댓글을 삭제해도 댓글 수가 바뀌지 않음
+	- 게시판 mapper의 댓글 수 바꾸는 쿼리를 작성하지 않음 

@@ -454,6 +454,29 @@ public interface MemberDao {
 - 회원가입 이메일 승인 로직 설정(isEnabled)
 - 네이버 로그인(SNS) 연동 추가
 
-## [ 프로젝트 중 실수 List ]
-- Summernote 웹 에디터로 게시글 수정할 때 textarea에 먼저 작성된 글(DB)을 불러오는 데 value속성으로 안되고 <textarea>여기에 값을 넣어줬는데 안됨</textarea>
-	- textarea의 선택자말고 Summernote에디터 내부 설정 선택자($(".note-editable").html(board.content);)를 잡고 넣으니 성공
+## [ 프로젝트 중 오류 ]
+- Summernote 웹 에디터로 게시글 수정할 때 textarea에 먼저 작성된 글(DB)을 불러오는 데 value속성으로 되지 않고
+  <textarea>여기에 값을 넣어줬는데 실패함</textarea>
+	- textarea의 선택자말고 Summernote에디터 내부 설정 선택자($(".note-editable").html(board.content);)를 잡고 넣어서 해결
+- 메인 화면 로고 이미지가 저장 위치 설정 오류로 나타나지 않음
+	- 먼저 이미지가 저장된 주소가 틀렸고 타임리프 문법 th:src="@{/img/logo.png}" 으로 해결
+- 스프링 시큐리티 WebSecurityConfigurerAdapter 객체를 사용할 수 없었음
+	- pom.xml의 스프링 버전 확인해보니 사용 할 수 없는 버전이라 SecurityFilterChain으로 대체
+- security config 설정을 잡는 데 어려움을 겪음
+	- 비로그인 시에도 사용 가능한 View를 requestMatcher로 따로 설정함
+- 회원가입시 아이디 중복체크할 때 이미 db에 있는 아이디를 넣으면 사용이 가능하다고 뜸
+	- DB와 연결되지 않음을 확인 후 UserDetails와 UserDetailsService를 사용해서 DB와 연결
+- 회원 가입하면 가입한 회원의 로그인이 제한 됨
+	- UserDetails 객체의 isEnabled메소드를 true로 설정
+	- 원래는 default 0으로 설정된 enabled를 이메일 인증으로 1로 바꿔줘야함
+- 로그인 실패 횟수가 로그인을해도 초기화되지않음
+	- SecurityConfig에서 FilterChain의 설정 중 defaultSuccessUrl이 지정되어 있어
+          SuccessHandler의 failCount 초기화 기능이 사용되지 않았음 그래서 defaultSuccessUrl제거
+- 회원을 탈퇴하면 DB에서는 데이터가 삭제되는데 로그아웃되지 않은 루트페이지(내정보)로 이동됨
+	- ajax를 2번 호출(delete, logout) / delete ajax가 성공하면 success함수로 logout ajax로 다시 호출
+- 페이징이 6까지만 렌더링됨(html에 li태그 7개)
+	- 반복문의 오류를 파악하고 chatgpt 도움으로 페이징 공식을 참고해(변수 i를 5로 나눈 나머지값) 다시 설정
+- 메일을 만들었는 데 보내지지 않음
+	- application.properties에 메일을설정함
+- 댓글을 삭제해도 댓글의 수가 바뀌지 않음
+	- 게시판 mapper의 댓글 수 바꾸는 쿼리를 작성하지 

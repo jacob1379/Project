@@ -449,10 +449,11 @@ public interface MemberDao {
 ## [ 추가하거나 보완해야 할 기능 ]
 - 파일 업로드 / 다운로드 추가
 - Summernote(웹 에디터) 게시글 변경 시 textarea 포커싱 맨뒤로
-- Summernote 게시글 작성 시 DB에 p태그 제거
+- Summernote 게시글 작성 시 Oracle DB에 p태그 제거
 - 게시판 검색 기능
 - 회원가입 이메일 승인 로직 설정(isEnabled)
-- 네이버 로그인 연동 추가
+- 네이버 로그인(SNS) 연동 추가
 
 ## [ 프로젝트 중 실수 List ]
-- 
+- Summernote 웹 에디터로 게시글 수정할 때 textarea에 먼저 작성된 글(DB)을 불러오는 데 value속성으로 안되고 <textarea>여기에 값을 넣어줬는데 안됨</textarea>
+	- textarea의 선택자말고 Summernote에디터 내부 설정 선택자($(".note-editable").html(board.content);)를 잡고 넣으니 성공

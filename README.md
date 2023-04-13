@@ -16,7 +16,7 @@
 > Back-End
 - Spring boot 3.0.4
 - JDK 17.0.3
-- Oracle Database 11g Express Edition
+- Oracle DBMS 11g Express Edition
 - Mybatis 3.0.0
 - Tomcat 9.0.64
 - Maven 4.0.0
@@ -28,7 +28,7 @@
 > 1주차 (03/06 ~ 03/12), View 페이지 및 DB 모델링
 - 개발환경 설정 및 프로젝트 주제 설정  
 - Bootsrap5를 이용해 HTML View 페이지 설계 및 생성  
-- Oracle DB Model 설계 및 생성  
+- Oracle DBMS Model 설계 및 생성  
 - View 페이지 완성  
 
 > 2주차 (03/13 ~ 03/19), Spring MVC 적용 및 게시판 기본 기능 완성     

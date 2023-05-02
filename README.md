@@ -1,4 +1,4 @@
-# 게시판(Bulletin Board) - 개인 프로젝트
+# 게시판(Bulletin Board) - 프로젝트
 - 게시판 시연 영상 : https://youtu.be/MYQLi3gH1RY
 ## 목적
 - 신입 웹 개발자의 기본소양
